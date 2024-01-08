@@ -93,7 +93,7 @@ class Wordly:
                 mask[i] = 0
         return mask
 
-    def move(self):
+    def start(self):
         """main function of class"""
 
         for attempt in range(6):
@@ -123,4 +123,4 @@ class Wordly:
 
 if __name__ == "__main__":
     game = Wordly()
-    game.move()
+    game.start()
