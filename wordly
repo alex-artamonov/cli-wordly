@@ -9,11 +9,12 @@ Return: return_description
 import random as r
 import sys
 import collections as ct
+from pathlib import Path
 from colorama import Fore, Back, Style
 
-
+path = Path(__file__).parent
+DICTIONARY = path  / "data/five_letters"
 MASK = "____"
-DICTIONARY = "/".join(__file__.split("/")[:-1]) + "/" + "data/five_letters"
 ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 colors_dic = {0: Back.LIGHTWHITE_EX, 1: Back.YELLOW, 2: Back.GREEN}
 CHEAT = "__CHEAT__"
