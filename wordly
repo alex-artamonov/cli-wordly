@@ -65,7 +65,7 @@ class Wordly:
             except ValueError as error:
                 print(error)
             except KeyboardInterrupt:
-                print('\nBye!')
+                print("\nBye!")
                 sys.exit()
 
     def move(self):
@@ -97,10 +97,5 @@ class Wordly:
 
 
 if __name__ == "__main__":
-    print()
-
     game = Wordly()
-    # game.display(game.word)
-    # game.display(game.next_word())
-    # game.get_letter()
     game.move()
