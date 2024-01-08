@@ -12,8 +12,8 @@ import collections as ct
 from pathlib import Path
 from colorama import Fore, Back, Style
 
-path = Path(__file__).parent
-DICTIONARY = path  / "data/five_letters"
+PATH = Path(__file__).parent
+DICTIONARY = PATH  / "data/five_letters"
 MASK = "____"
 ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 colors_dic = {0: Back.LIGHTWHITE_EX, 1: Back.YELLOW, 2: Back.GREEN}
@@ -109,7 +109,6 @@ class Wordly:
             mask_forward = self.get_mask(candidate, range(MAX_COUNT))
             mask_backward = self.get_mask(candidate, range(MAX_COUNT, -1, -1))
 
-            print(mask_forward, mask_backward)
             self.mask = (
                 mask_forward
                 if sum(mask_forward) >= sum(mask_backward)
