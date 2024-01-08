@@ -1,0 +1,18 @@
+[project]
+name = "wordly_cli"
+version = "0.0.1"
+authors = [
+  { name="Alex Artamonov", email="alex.artamonov2010@gmail.com" },
+]
+description = "My rendition of the Wordle game for command line"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/alex-artamonov/cli-wordly"
+Issues = "https://github.com/alex-artamonov/cli-wordly/issues"
