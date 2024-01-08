@@ -17,6 +17,7 @@ DICTIONARY = "/".join(__file__.split("/")[:-1]) + "/" + "data/five_letters"
 ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 colors_dic = {0: Back.LIGHTWHITE_EX, 1: Back.YELLOW, 2: Back.GREEN}
 CHEAT = "__CHEAT__"
+MAX_COUNT = 4
 
 
 class Wordly:
@@ -38,6 +39,7 @@ class Wordly:
 
     def print_color(self, word):
         """print a word in colors in the terminal"""
+
         for i, char in enumerate(word):
             print(Fore.BLACK + colors_dic[self.mask[i]] + " " + char, end=" ")
         print(Style.RESET_ALL)
@@ -57,7 +59,7 @@ class Wordly:
                     return word
                 if len(word) != 5:
                     raise ValueError("Five letters only!")
-                if not all((c in ABC for c in word)):
+                if not all((char in ABC for char in word)):
                     raise ValueError("English letters only!")
                 if word not in self.dictionary:
                     raise ValueError("Only existing 5-letter words!")
@@ -68,28 +70,50 @@ class Wordly:
                 print("\nBye!")
                 sys.exit()
 
+    def get_mask(self, candidate: str, rng: range):
+        """Returns a 'mask' for a candidate word:, i.e list of 5 numbers (0/1/2)
+            representing the result of the guess for a particular letter
+        Keyword arguments:
+        candidate -- a guessing word
+        Return: 'mask'
+        """
+
+        mask = [0, 0, 0, 0, 0]
+        word_dict = dict(ct.Counter(self.word))
+        for i in rng:
+            if candidate[i] in self.word and word_dict[candidate[i]]:
+                word_dict[candidate[i]] -= 1
+                if candidate[i] == self.word[i]:
+                    mask[i] = 2
+                else:
+                    mask[i] = 1
+            else:
+                mask[i] = 0
+        return mask
+
     def move(self):
         """main function of class"""
+
         for attempt in range(6):
             candidate = self.next_word(f"Attempt {attempt + 1}/6: ")
             if candidate == CHEAT:
                 print(self.word)
                 candidate = self.next_word(f"Attempt {attempt + 1}/6: ")
-            word_dict = dict(ct.Counter(self.word))
-            if candidate == self.word:
-                self.mask = [2, 2, 2, 2, 2]
-                self.print_color(candidate)
-                print("you win!")
-                return
-            for i, char in enumerate(candidate):
-                if char in self.word and word_dict[char]:
-                    word_dict[char] -= 1
-                    if candidate[i] == self.word[i]:
-                        self.mask[i] = 2
-                    else:
-                        self.mask[i] = 1
-                else:
-                    self.mask[i] = 0
+
+            # if candidate == self.word:
+            #     self.mask = [2, 2, 2, 2, 2]
+            #     self.print_color(candidate)
+            #     print("you win!")
+            #     return
+            mask_forward = self.get_mask(candidate, range(MAX_COUNT))
+            mask_backward = self.get_mask(candidate, range(MAX_COUNT, -1, -1))
+
+            print(mask_forward, mask_backward)
+            self.mask = (
+                mask_forward
+                if sum(mask_forward) >= sum(mask_backward)
+                else mask_backward
+            )
             self.print_color(candidate)
         print("You lost!")
         self.print_color(self.word)
