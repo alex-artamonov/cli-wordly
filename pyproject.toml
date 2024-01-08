@@ -15,6 +15,11 @@ classifiers = [
 
 keywords = ["python", "games", "wordle", "english", "word games", "command line games"]
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+
 [project.urls]
 "Homepage" = "https://github.com/alex-artamonov/cli-wordly"
 "Bug tracker" = "https://github.com/alex-artamonov/cli-wordly/issues"

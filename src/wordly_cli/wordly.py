@@ -17,7 +17,10 @@ DICTIONARY = (PATH  / "five_letters").resolve()
 print(DICTIONARY)
 MASK = "____"
 ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-colors_dic = {0: Back.LIGHTWHITE_EX, 1: Back.YELLOW, 2: Back.GREEN}
+colors_dic = {0: Back.LIGHTWHITE_EX, 
+              1: Back.YELLOW, 
+              2: Back.GREEN, 
+              3: Back.MAGENTA,}
 CHEAT = "__CHEAT__"
 MAX_COUNT = 4
 
@@ -103,7 +106,7 @@ class Wordly:
                 candidate = self.next_word(f"Attempt {attempt + 1}/6: ")
 
             if candidate == self.word:
-                self.mask = [2, 2, 2, 2, 2]
+                self.mask = [2] * (MAX_COUNT + 1)
                 self.print_color(candidate)
                 print("you win!")
                 return
@@ -117,6 +120,7 @@ class Wordly:
             )
             self.print_color(candidate)
         print("You lost!")
+        self.mask = [3] * (MAX_COUNT + 1)
         self.print_color(self.word)
         print(Style.RESET_ALL)
 
