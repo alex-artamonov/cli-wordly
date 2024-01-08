@@ -90,7 +90,6 @@ class Wordly:
                 else:
                     self.mask[i] = 0
             self.print_color(candidate)
-            print(self.mask)
         print("You lost!")
         self.print_color(self.word)
         print(Style.RESET_ALL)
