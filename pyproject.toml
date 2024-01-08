@@ -13,6 +13,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+keywords = ["python", "games", "wordle", "english", "word games", 
+            "command line games],
+
 [project.urls]
-Homepage = "https://github.com/alex-artamonov/cli-wordly"
-Issues = "https://github.com/alex-artamonov/cli-wordly/issues"
+"Homepage" = "https://github.com/alex-artamonov/cli-wordly"
+"Bug tracker" = "https://github.com/alex-artamonov/cli-wordly/issues"

@@ -12,8 +12,8 @@ import collections as ct
 from pathlib import Path
 from colorama import Fore, Back, Style
 
-PATH = Path(__file__).parent.parent
-DICTIONARY = (PATH  / "../data/five_letters").resolve()
+PATH = Path(__file__).parent
+DICTIONARY = (PATH  / "five_letters").resolve()
 print(DICTIONARY)
 MASK = "____"
 ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
