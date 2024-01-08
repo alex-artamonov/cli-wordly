@@ -1,17 +1,26 @@
 #!/usr/bin/python
+"""Module for game of Wordly in command line
+
+Keyword arguments:
+argument -- description
+Return: return_description
+"""
 
 import random as r
-from colorama import Fore, Back, Style
 import collections as ct
+from colorama import Fore, Back, Style
+
 
 MASK = "____"
-DICTIONARY = '/'.join(__file__.split('/')[:-1]) + '/' + "data/five_letters"
+DICTIONARY = "/".join(__file__.split("/")[:-1]) + "/" + "data/five_letters"
 ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 colors_dic = {0: Back.LIGHTWHITE_EX, 1: Back.YELLOW, 2: Back.GREEN}
-CHEAT = '__CHEAT__'
+CHEAT = "__CHEAT__"
 
 
 class Wordly:
+    """Game of Wordly in command-line interface"""
+
     def __init__(self):
         self.mask = [0, 0, 0, 0, 0]
         self.dictionary = self._load_dictionary()
@@ -19,7 +28,7 @@ class Wordly:
 
     @staticmethod
     def _load_dictionary():
-        with open(DICTIONARY) as file:
+        with open(DICTIONARY, encoding="utf-8") as file:
             lst = [word.strip().upper() for word in file.readlines()]
             return lst
 
@@ -27,11 +36,19 @@ class Wordly:
         return r.choice(self.dictionary)
 
     def print_color(self, word):
-        for i, c in enumerate(word):
-            print(Fore.BLACK + colors_dic[self.mask[i]] + ' ' + c, end=" ")
+        """print a word in colors in the terminal"""
+        for i, char in enumerate(word):
+            print(Fore.BLACK + colors_dic[self.mask[i]] + " " + char, end=" ")
         print(Style.RESET_ALL)
 
     def next_word(self, prompt: str = "Type a 5-letter word\n"):
+        """get the user input: 5-letter word
+
+        Keyword arguments:
+        prompt -- text
+        Return: 5-letter word
+        """
+
         while True:
             try:
                 word = input(prompt).upper()
@@ -39,29 +56,33 @@ class Wordly:
                     return word
                 if len(word) != 5:
                     raise ValueError("Five letters only!")
-                if not all([c in ABC for c in word]):
+                if not all((c in ABC for c in word)):
                     raise ValueError("English letters only!")
                 if word not in self.dictionary:
                     raise ValueError("Only existing 5-letter words!")
                 return word
-            except ValueError as e:
-                print(e)
+            except ValueError as error:
+                print(error)
+            except KeyboardInterrupt:
+                print('\nBye!')
+                exit()
 
     def move(self):
+        """main function of class"""
         for attempt in range(6):
-            candidate = self.next_word(f'Attempt {attempt + 1}/6: ')
+            candidate = self.next_word(f"Attempt {attempt + 1}/6: ")
             if candidate == CHEAT:
                 print(self.word)
-                candidate = self.next_word(f'Attempt {attempt + 1}/6: ')
+                candidate = self.next_word(f"Attempt {attempt + 1}/6: ")
             word_dict = dict(ct.Counter(self.word))
             if candidate == self.word:
                 self.mask = [2, 2, 2, 2, 2]
                 self.print_color(candidate)
                 print("you win!")
                 return
-            for i, c in enumerate(candidate):
-                if c in self.word and word_dict[c]:
-                    word_dict[c] -= 1
+            for i, char in enumerate(candidate):
+                if char in self.word and word_dict[char]:
+                    word_dict[char] -= 1
                     if candidate[i] == self.word[i]:
                         self.mask[i] = 2
                     else:
