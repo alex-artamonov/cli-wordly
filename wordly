@@ -7,6 +7,7 @@ Return: return_description
 """
 
 import random as r
+import sys
 import collections as ct
 from colorama import Fore, Back, Style
 
@@ -65,7 +66,7 @@ class Wordly:
                 print(error)
             except KeyboardInterrupt:
                 print('\nBye!')
-                exit()
+                sys.exit()
 
     def move(self):
         """main function of class"""
