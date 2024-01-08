@@ -100,11 +100,11 @@ class Wordly:
                 print(self.word)
                 candidate = self.next_word(f"Attempt {attempt + 1}/6: ")
 
-            # if candidate == self.word:
-            #     self.mask = [2, 2, 2, 2, 2]
-            #     self.print_color(candidate)
-            #     print("you win!")
-            #     return
+            if candidate == self.word:
+                self.mask = [2, 2, 2, 2, 2]
+                self.print_color(candidate)
+                print("you win!")
+                return
             mask_forward = self.get_mask(candidate, range(MAX_COUNT))
             mask_backward = self.get_mask(candidate, range(MAX_COUNT, -1, -1))
 
