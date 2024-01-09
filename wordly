@@ -29,9 +29,12 @@ class Wordly:
     """Game of Wordly in command-line interface"""
 
     def __init__(self):
-        self.mask = [0, 0, 0, 0, 0]
         self.dictionary = self._load_dictionary()
         self.word = self._get_word()
+        self.reset_mask()
+
+    def reset_mask(self):
+        self.mask = [0] * (MAX_COUNT + 1)
 
     @staticmethod
     def _load_dictionary():
@@ -75,7 +78,7 @@ class Wordly:
                 print("\nBye!")
                 sys.exit()
 
-    def get_mask(self, candidate: str, rng: range):
+    def check_word(self, candidate: str, rng: range):
         """Returns a 'mask' for a candidate word:, i.e list of 5 numbers (0/1/2)
             representing the result of the guess for a particular letter
         Keyword arguments:
@@ -83,18 +86,18 @@ class Wordly:
         Return: 'mask'
         """
 
-        mask = [0, 0, 0, 0, 0]
+        self.reset_mask()
         word_dict = dict(ct.Counter(self.word))
         for i in rng:
             if candidate[i] in self.word and word_dict[candidate[i]]:
                 word_dict[candidate[i]] -= 1
                 if candidate[i] == self.word[i]:
-                    mask[i] = 2
+                    self.mask[i] = 2
                 else:
-                    mask[i] = 1
+                    self.mask[i] = 1
             else:
-                mask[i] = 0
-        return mask
+                self.mask[i] = 0
+        return self.mask
 
     def start(self):
         """main function of class"""
@@ -110,8 +113,8 @@ class Wordly:
                 self.print_color(candidate)
                 print("you win!")
                 return
-            mask_forward = self.get_mask(candidate, range(MAX_COUNT))
-            mask_backward = self.get_mask(candidate, range(MAX_COUNT, -1, -1))
+            mask_forward = self.check_word(candidate, range(MAX_COUNT))
+            mask_backward = self.check_word(candidate, range(MAX_COUNT, -1, -1))
 
             self.mask = (
                 mask_forward
